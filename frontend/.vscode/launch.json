@@ -1,0 +1,53 @@
+{
+  "configurations": [
+    {
+      "name": "Android Emulator",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "emulator-5554"
+    },
+    {
+      "name": "iPhone 15 SIM",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "F5BC8A03-20C8-4DB0-9A8F-3F060FA84383"
+    },
+    {
+      "name": "iPhone 14 SIM",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "DCEF74F3-280E-4B10-8EE7-1078E98DAE0A"
+    },
+    {
+      "name": "iPad Pro 9.7 SIM",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "D5A58438-1B26-42E6-9F42-27ACE1EB6DA3"
+    },
+    {
+      "name": "iPhone 12 real device",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "00008101-0005693C0E91001E"
+    },
+    {
+      "name": "Samsung Galaxy Tab 7",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "R52R20G7QFZ"
+    },
+    {
+      "name": "Samsung Galaxy S10e",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "R38MA0G97XE"
+    }
+  ]
+}

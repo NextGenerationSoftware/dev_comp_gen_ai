@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
+import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/ai_repository.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +47,15 @@ class _ArPageState extends State<ArPage> {
   }
 
   Future onCameraTap() async {
-    aiInformation = await AiRepository().analyzeImage();
-    setState(() {});
+    final imageFile = await cameraController?.takePicture();
+    if (imageFile != null) {
+      Uint8List imageByteList = await imageFile.readAsBytes();
+      aiInformation = await AiRepository().analyzeImage(imageByteList);
+      setState(() {});
+    } else {
+      GlobalFunctions.showInfo1(
+          context: context, message: "Image couldn't be taken.");
+    }
   }
 
   @override

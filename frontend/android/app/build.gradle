@@ -57,3 +57,7 @@ flutter {
     source = "../.."
 }
 
+dependencies {
+    implementation 'com.google.ar:core:1.33.0'
+}
+

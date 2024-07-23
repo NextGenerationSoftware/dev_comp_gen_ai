@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
@@ -43,7 +44,7 @@ class _ArPageState extends State<ArPage> {
   @override
   void initState() {
     super.initState();
-    initialize();
+    //initialize();
   }
 
   Future onCameraTap() async {

@@ -1,5 +1,6 @@
 import 'package:dev_comp_gen_ai_frontend/core/repositories/environment_repository.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/ar_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/test_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(body: const ArPage()),
+      home: const Scaffold(body: TestPage()),
     );
   }
 }

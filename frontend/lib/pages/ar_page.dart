@@ -7,6 +7,7 @@ import 'package:dev_comp_gen_ai_frontend/core/repositories/ai_repository.dart';
 import 'package:flutter/material.dart';
 
 class ArPage extends StatefulWidget {
+  static const route = "/";
   const ArPage({super.key});
 
   @override

@@ -1,3 +1,5 @@
+import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
+import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/environment_repository.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/ar_page.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +17,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalVariables.screenSize = MediaQuery.of(context).size;
+    final AppRouter appRouter = AppRouter();
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Gemini Challenge 2024',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        fontFamily: "Object Sans",
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueAccent,
+          surface: GlobalColors.background1,
+          background: Colors.white,
+        ),
       ),
       home: const Scaffold(body: SafeArea(child: ArPage())),
     );

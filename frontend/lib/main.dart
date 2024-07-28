@@ -1,8 +1,5 @@
 import 'package:dev_comp_gen_ai_frontend/core/repositories/environment_repository.dart';
-import 'package:dev_comp_gen_ai_frontend/core/widgets/arcore_view_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/ar_page.dart';
-import 'package:dev_comp_gen_ai_frontend/pages/platform_view_test.dart';
-import 'package:dev_comp_gen_ai_frontend/pages/test_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(body: SafeArea(child: ArcoreView1())),
+      home: const Scaffold(body: SafeArea(child: ArPage())),
     );
   }
 }

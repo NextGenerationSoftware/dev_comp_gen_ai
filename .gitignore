@@ -1,2 +1,5 @@
 *.env
 *.code-workspace
+/venv
+__pycache__
+firebase.json

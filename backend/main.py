@@ -14,6 +14,17 @@ async def root():
 async def gemini(request: GeminiRequest):
     res = GeminiAPI().gemini_flash(image_path=request.img_path, prompt=request.prompt)
 
-    return {"response": res, "prompt": request.prompt, "image_path": request.img_path, "text": res.text}  
+    return {"response": res, "prompt": request.prompt, "image_path": request.img_path, "text": res.text} 
 
-# Run the FastAPI server
+
+@app.get("/datasets")
+async def datasets():
+    res = GeminiAPI().get_datasets()
+
+    return {"response": res}
+
+@app.post("/datasets")
+async def datasets(request: GeminiRequest):
+    res = GeminiAPI().get_datasets()
+
+    return {"response": res, "prompt": request.prompt, "image_path": request.img_path, "text": res.text}

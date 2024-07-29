@@ -1,3 +1,4 @@
+import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/landing_page/landing_page.dart';
@@ -22,6 +23,12 @@ class _SettingsPageState extends State<SettingsPage> {
       changes = true;
     }
     return changes;
+  }
+
+  signOut() {
+    GlobalFunctions.signOut();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(LandingPage.route, (route) => false);
   }
 
   @override
@@ -63,8 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          LandingPage.route, (route) => false);
+                      signOut();
                     },
                     child: const Text(
                       "Sign out",

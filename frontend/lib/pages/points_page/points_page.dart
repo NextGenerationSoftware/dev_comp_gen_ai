@@ -11,6 +11,7 @@ class PointsPage extends StatelessWidget {
       child: Column(
         children: [
           PointsPageHeader(),
+          //TODO: points page from pointStatsData
         ],
       ),
     );

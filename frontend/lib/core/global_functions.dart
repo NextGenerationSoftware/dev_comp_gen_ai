@@ -9,4 +9,9 @@ class GlobalFunctions {
       ),
     );
   }
+
+  static dismissKeyboard() {
+    // dismiss the keyboard and remove the focus from the text field when clicking anywhere
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 }

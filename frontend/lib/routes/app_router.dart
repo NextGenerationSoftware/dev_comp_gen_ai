@@ -1,6 +1,12 @@
 import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
-import 'package:dev_comp_gen_ai_frontend/pages/ar_page.dart';
+import 'package:dev_comp_gen_ai_frontend/core/wrapper/global_data_wrapper.dart';
+import 'package:dev_comp_gen_ai_frontend/core/wrapper/user_data_wrapper.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/camera_page/camera_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/landing_page/landing_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/points_page/points_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/settings_page/settings_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/shop_page/shop_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -8,35 +14,35 @@ class AppRouter {
     // save current route name as global variable to use it in other parts of the app
     GlobalVariables.currentRoute = routeSettings.name;
     switch (routeSettings.name) {
-      case ArPage.route:
-        return CustomPageRoute1(
-          safeArea: false,
-          child: ArPage(),
-        );
-      /*case SignIn.route:
+      case LandingPage.route:
         return CustomPageRoute1(
           safeArea: true,
-          child: const SignIn(),
+          child: const LandingPage(),
         );
-      case SignUp.route:
+      case CameraPage.route:
         return CustomPageRoute1(
           safeArea: true,
-          child: const SignUp(),
+          child: const CameraPage(),
         );
-      case FinishSignUp.route:
+      case SettingsPage.route:
         return CustomPageRoute1(
           safeArea: true,
-          child: const FinishSignUp(),
+          child: const SettingsPage(),
         );
-      case MainUserMenu.route:
+      case PointsPage.route:
         return CustomPageRoute1(
           safeArea: true,
-          child: const UserDataWrapper(child: MainUserMenu()),
-        );*/
+          child: const PointsPage(),
+        );
+      case ShopPage.route:
+        return CustomPageRoute1(
+          safeArea: true,
+          child: const ShopPage(),
+        );
       default:
         return CustomPageRoute1(
           safeArea: true,
-          child: ArPage(),
+          child: const LandingPage(),
         );
     }
   }
@@ -65,17 +71,23 @@ class CustomPageRoute1 extends MaterialPageRoute {
       opacity: animation,
       child: Scaffold(
         body: GlobalDataWrapper(
-          child: safeArea
-              ? SafeArea(
-                  child: Container(
+          child: UserDataWrapper(
+            child: safeArea
+                ? SafeArea(
+                    child: Container(
+                      width: GlobalVariables.screenSize.width,
+                      height: GlobalVariables.screenSize.height,
+                      color: GlobalColors.background1,
+                      child: child,
+                    ),
+                  )
+                : Container(
+                    width: GlobalVariables.screenSize.width,
+                    height: GlobalVariables.screenSize.height,
                     color: GlobalColors.background1,
                     child: child,
                   ),
-                )
-              : Container(
-                  color: GlobalColors.background1,
-                  child: child,
-                ),
+          ),
         ),
       ),
     );

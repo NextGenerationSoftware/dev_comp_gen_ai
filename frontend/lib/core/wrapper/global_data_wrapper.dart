@@ -1,5 +1,8 @@
-import 'dart:async';
-import 'dart:developer';
+import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
+import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/error_page_1.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/error_page_2.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/loading_page_1.dart';
 import 'package:flutter/material.dart';
 
 class GlobalDataWrapper extends StatefulWidget {

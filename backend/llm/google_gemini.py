@@ -3,6 +3,7 @@ import PIL.Image
 from io import BytesIO
 import requests
 import os
+import json
 
 class GeminiAPI:
 
@@ -23,3 +24,22 @@ class GeminiAPI:
         print(response)
         print(response.text)
         return response.text
+
+    def generate_content(self, prompt: str) -> str:
+        model = genai.GenerativeModel('gemini-1.5-flash')
+
+        response = model.generate_content([prompt])
+
+        return response.text
+
+
+    @staticmethod
+    def extract_json_from_text(text: str) -> dict:
+        # Remove the triple backticks and the json formatting if present
+        json_str = text.strip('```json').strip('```').strip()
+        try:
+            # Convert the cleaned string to a Python dictionary
+            return json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+            return None

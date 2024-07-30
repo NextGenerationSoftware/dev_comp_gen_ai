@@ -1,22 +1,19 @@
+import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
-import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
 import 'package:flutter/material.dart';
 
-class NotificationHistoryOverlay1 extends StatefulWidget {
+class NotificationHistoryOverlay1 extends StatelessWidget {
   // display the notifications history
-  const NotificationHistoryOverlay1({super.key});
+  final Function() onDetails;
+  const NotificationHistoryOverlay1({super.key, required this.onDetails});
 
-  @override
-  State<NotificationHistoryOverlay1> createState() =>
-      _NotificationHistoryOverlay1State();
-}
-
-class _NotificationHistoryOverlay1State
-    extends State<NotificationHistoryOverlay1> {
-  @override
-  void initState() {
-    super.initState();
+  Future displayDetails(
+      BuildContext context, NotificationData notificationData) async {
+    // display the details of the notification
+    onDetails();
+    GlobalFunctions.launchPopup1(
+        context: context, child: Text(notificationData.text ?? "-"));
   }
 
   @override
@@ -42,23 +39,29 @@ class _NotificationHistoryOverlay1State
                       shrinkWrap: true,
                       itemCount: GlobalVariables.notificationData.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                GlobalVariables
-                                        .notificationData[index].headline ??
-                                    "-",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(GlobalVariables
-                                      .notificationData[index].text ??
-                                  "-"),
-                            ],
+                        return GestureDetector(
+                          onTap: () {
+                            displayDetails(context,
+                                GlobalVariables.notificationData[index]);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  GlobalVariables
+                                          .notificationData[index].headline ??
+                                      "-",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                /*Text(GlobalVariables
+                                        .notificationData[index].text ??
+                                    "-"),*/
+                              ],
+                            ),
                           ),
                         );
                       },

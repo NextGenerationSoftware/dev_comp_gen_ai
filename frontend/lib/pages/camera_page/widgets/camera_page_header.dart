@@ -1,3 +1,4 @@
+import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/points_page/points_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/settings_page/settings_page.dart';
@@ -33,11 +34,20 @@ class CameraPageHeader extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(PointsPage.route);
             },
-            child: Text(
-              ((GlobalVariables.pointStatsData!.totalPoints ?? 0) -
-                      (GlobalVariables.userData!.pointsspent ?? 0))
-                  .toString(),
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            child: Row(
+              children: [
+                Text(
+                  ((GlobalVariables.pointStatsData!.totalPoints ?? 0) -
+                          (GlobalVariables.userData!.pointsspent ?? 0))
+                      .toString(),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const Icon(
+                  Icons.star,
+                  color: GlobalColors.highlight4,
+                )
+              ],
             ),
           ),
           Expanded(

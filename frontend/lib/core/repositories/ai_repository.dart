@@ -12,6 +12,7 @@ class AiRepository {
   );
 
   Future<String?> analyzeImage(Uint8List imageByteList) async {
+    // analyze the image with the AI model directly from the app to the AI
     String? response;
     const prompt =
         'Tell me what you see in this picture. Afterwards tell me your suggestions about how to save waste and energy for the things you see in this picture.';

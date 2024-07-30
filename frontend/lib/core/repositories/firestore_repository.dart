@@ -62,6 +62,23 @@ class FirestoreRepository {
     return success;
   }
 
+  static Future<bool> uploadDatataken(
+      {required DBDatataken dbDatataken}) async {
+    // uploads a new datataken dataset
+    bool success = false;
+    try {
+      await FirebaseFirestore.instance
+          .collection("DATATAKEN")
+          .doc(dbDatataken.id)
+          .set(dbDatataken.toMap());
+      success = true;
+    } catch (e) {
+      log(e.toString());
+      success = false;
+    }
+    return success;
+  }
+
   static Future<List<DBDatarequired>> getDatarequiredList(
       {String? offsetId, int resultLimit = 100}) async {
     List<DBDatarequired> datarequiredList = [];

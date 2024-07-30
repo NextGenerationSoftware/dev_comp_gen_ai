@@ -27,10 +27,10 @@ class PointsPageHeader extends StatelessWidget {
               ],
             ),
           ),
-          const Text(
+          /*const Text(
             "Points",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+          ),*/
           const Expanded(child: SizedBox()),
         ],
       ),

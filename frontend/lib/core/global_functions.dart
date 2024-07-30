@@ -4,6 +4,7 @@ import 'package:dev_comp_gen_ai_frontend/core/data_models/db_datataken.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/point_stats_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/popup_frame_1.dart';
 import 'package:flutter/material.dart';
 
 class GlobalFunctions {
@@ -14,6 +15,32 @@ class GlobalFunctions {
         content: Text(message),
       ),
     );
+  }
+
+  static Future<dynamic> launchPopup1({
+    Widget? child,
+    required BuildContext context,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+    BorderRadius? borderRadius,
+    final Color? backgroundColor,
+  }) async {
+    dynamic retVal;
+    await showDialog(
+        context: context,
+        useRootNavigator: false,
+        builder: (context) {
+          return PopupFrame1(
+            padding: padding,
+            margin: margin,
+            borderRadius: borderRadius,
+            backgroundColor: backgroundColor,
+            child: child,
+          );
+        }).then((value) {
+      retVal = value;
+    });
+    return retVal;
   }
 
   static dismissKeyboard() {
@@ -62,5 +89,10 @@ class GlobalFunctions {
     GlobalVariables.datarequiredMap = {};
     GlobalVariables.notificationData = [];
     GlobalVariables.pointStatsData = null;
+  }
+
+  static String createUid() {
+    // create an uid from timestamp
+    return DateTime.now().millisecondsSinceEpoch.toString();
   }
 }

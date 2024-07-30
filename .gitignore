@@ -1,4 +1,6 @@
 *.env
+*.code-workspace
 /venv
 __pycache__
 firebase.json
+frontend/android/app/google-services.json

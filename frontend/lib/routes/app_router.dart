@@ -16,7 +16,7 @@ class AppRouter {
     switch (routeSettings.name) {
       case LandingPage.route:
         return CustomPageRoute1(
-          safeArea: true,
+          safeArea: false,
           child: const LandingPage(),
         );
       case CameraPage.route:

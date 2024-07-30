@@ -1,3 +1,4 @@
+import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
@@ -71,26 +72,53 @@ class _DatarequiredOverlay1State extends State<DatarequiredOverlay1> {
                           GlobalVariables.datarequiredMap.values.first.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                (GlobalFunctions.pointcatToPoints(
-                                            GlobalVariables
-                                                .datarequiredMap
-                                                .values
-                                                .first[index]
-                                                .pointcat) ??
-                                        0)
-                                    .toString(),
+                                GlobalVariables.datarequiredMap.values
+                                        .first[index].description ??
+                                    "-",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(GlobalVariables.datarequiredMap.values
-                                      .first[index].description ??
-                                  "-"),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    (GlobalFunctions.pointcatToPoints(
+                                                GlobalVariables
+                                                    .datarequiredMap
+                                                    .values
+                                                    .first[index]
+                                                    .pointcat) ??
+                                            0)
+                                        .toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  const Icon(
+                                    Icons.star,
+                                    color: GlobalColors.highlight2,
+                                    size: 18,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              if (index <
+                                  GlobalVariables
+                                          .datarequiredMap.values.first.length -
+                                      1)
+                                const Divider(),
                             ],
                           ),
                         );

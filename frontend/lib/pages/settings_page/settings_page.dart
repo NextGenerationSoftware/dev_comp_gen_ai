@@ -1,3 +1,4 @@
+import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
@@ -39,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,15 +67,16 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       : const SizedBox(),
                   const SizedBox(
-                    height: 50,
+                    height: 70,
                   ),
-                  TextButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       signOut();
                     },
                     child: const Text(
                       "Sign out",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                          fontSize: 16, color: GlobalColors.highlight3),
                     ),
                   ),
                 ],

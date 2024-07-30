@@ -102,25 +102,30 @@ class _CameraPageState extends State<CameraPage> {
 
   displayNewNotification(NotificationData notificationData) async {
     // display a new notification for some time and remove it afterwards
-    late OverlayEntry newNotificationOverlayEntry;
-    newNotificationOverlayEntry = OverlayEntry(
-      builder: (context) {
-        return NewNotificationOverlay1(
-          notificationData: notificationData,
-          onDetails: () {
-            try {
-              newNotificationOverlayEntry.remove();
-            } catch (e) {
-              // no problem, can happen
-            }
+    try {
+      if (mounted &&
+          !takingImageLoading &&
+          GlobalVariables.currentRoute == CameraPage.route) {
+        // only process when camera_page is the current route
+        late OverlayEntry newNotificationOverlayEntry;
+        newNotificationOverlayEntry = OverlayEntry(
+          builder: (context) {
+            return NewNotificationOverlay1(
+              notificationData: notificationData,
+              onDetails: () {
+                try {
+                  newNotificationOverlayEntry.remove();
+                } catch (e) {
+                  // no problem, can happen
+                }
+              },
+            );
           },
         );
-      },
-    );
-    Overlay.of(context).insert(newNotificationOverlayEntry);
-    await Future.delayed(const Duration(seconds: 5));
-    try {
-      newNotificationOverlayEntry.remove();
+        Overlay.of(context).insert(newNotificationOverlayEntry);
+        await Future.delayed(const Duration(seconds: 5));
+        newNotificationOverlayEntry.remove();
+      }
     } catch (e) {
       // no problem, can happen
     }
@@ -145,9 +150,10 @@ class _CameraPageState extends State<CameraPage> {
         NotificationData notificationData = NotificationData(
           headline: backendImagePreview.headline,
           text: backendImagePreview.text,
+          timestamp: DateTime.now(),
         );
         // add a notification to the list
-        GlobalVariables.notificationData.add(notificationData);
+        GlobalFunctions.addNotificationToHistory(notificationData);
         // display notifcation
         displayNewNotification(notificationData);
       } else {
@@ -227,8 +233,8 @@ class _CameraPageState extends State<CameraPage> {
               context: context, message: "Image couldn't be processed.");
         }
       } else {
-        GlobalFunctions.showInfo1(
-            context: context, message: "Image couldn't be uploaded.");
+        /*GlobalFunctions.showInfo1(
+            context: context, message: "Image couldn't be uploaded.");*/
       }
     } else {
       GlobalFunctions.showInfo1(

@@ -23,13 +23,27 @@ class _ImageEvaluated1State extends State<ImageEvaluated1> {
       BackendRepository()
           .backendImageEvaluation(widget.imageUrl, widget.imageId)
           .then((value) {
-        Navigator.of(context).pop(value);
+        if (mounted) {
+          Navigator.of(context).pop(value);
+        }
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator();
+    return const Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CircularProgressIndicator(),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "Evaluating Image...",
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
+    );
   }
 }

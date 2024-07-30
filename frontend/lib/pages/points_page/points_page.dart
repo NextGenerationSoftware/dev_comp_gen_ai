@@ -21,12 +21,12 @@ class PointsPage extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
+                begin: Alignment.topCenter,
                 end: Alignment.bottomRight,
                 colors: [
-                  GlobalColors.highlight4.withAlpha(230),
-                  GlobalColors.highlight3.withAlpha(230),
-                  GlobalColors.highlight2.withAlpha(230),
+                  GlobalColors.highlight4.withAlpha(100),
+                  GlobalColors.highlight3.withAlpha(100),
+                  //GlobalColors.highlight2.withAlpha(230),
                 ],
               ),
             ),
@@ -39,12 +39,25 @@ class PointsPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(30, 50, 30, 40),
                     child: Column(
                       children: [
-                        Text(
-                          totalPoints.toString(),
-                          style: const TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              totalPoints.toString(),
+                              style: const TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Icon(
+                              Icons.star,
+                              color: GlobalColors.highlight2,
+                              size: 30,
+                            )
+                          ],
                         ),
                         const Text(
                           "Total Points",
@@ -54,7 +67,7 @@ class PointsPage extends StatelessWidget {
                               color: Colors.black),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
                         Row(
                           children: [
@@ -64,17 +77,17 @@ class PointsPage extends StatelessWidget {
                                 Text(
                                   availablePoints.toString(),
                                   style: const TextStyle(
-                                      fontSize: 30,
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                                      color: Colors.black),
                                 ),
                                 const Text(
                                   "available",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black54),
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
@@ -85,17 +98,17 @@ class PointsPage extends StatelessWidget {
                                 Text(
                                   spentPoints.toString(),
                                   style: const TextStyle(
-                                      fontSize: 30,
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                                      color: Colors.black),
                                 ),
                                 const Text(
                                   "spent",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black54),
+                                      color: Colors.black),
                                 ),
                               ],
                             ),

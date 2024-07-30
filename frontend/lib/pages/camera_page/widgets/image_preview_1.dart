@@ -3,7 +3,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
+import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/storage_repository.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/custom_button_1.dart';
 import 'package:flutter/material.dart';
 
 class ImagePreview1 extends StatefulWidget {
@@ -47,24 +49,42 @@ class _ImagePreview1State extends State<ImagePreview1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          child: Image.file(File(widget.imageFile.path)),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: GlobalVariables.screenSize.height * 0.6),
+            child: Image.file(File(widget.imageFile.path), fit: BoxFit.contain),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
         ),
         loading
             ? const CircularProgressIndicator()
-            : Row(
+            : Column(
                 children: [
-                  ElevatedButton(
+                  CustomButton1(
                     onPressed: () {
                       Navigator.of(context).pop(null);
                     },
-                    child: const Text("Cancel"),
+                    color: Colors.red,
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  ElevatedButton(
+                  CustomButton1(
                     onPressed: () {
                       proceedImage();
                     },
-                    child: const Text("Process"),
+                    color: Colors.black,
+                    child: const Text(
+                      "Proceed",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

@@ -5,6 +5,10 @@ import requests
 import os
 import json
 
+# https://stackoverflow.com/questions/74522824/pil-unidentifiedimageerror-cannot-identify-image-on-this-specific-image
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES=True
+
 class GeminiAPI:
 
     def __init__(self, api_key: str = None) -> None:

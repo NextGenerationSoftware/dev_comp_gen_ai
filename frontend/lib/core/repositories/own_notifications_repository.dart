@@ -8,13 +8,26 @@ class OwnNotificationsRepository {
     // display the details of the notification
     GlobalFunctions.launchPopup1(
         context: context,
-        child: Column(
-          children: [
-            //TODO: make notifications look nice
-            Text(notificationData.text ?? "-"),
-            Text(notificationData.text ?? "-"),
-            Text(notificationData.text ?? "-"),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                notificationData.headline ?? "-",
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                notificationData.text ?? "-",
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 18),
+              ),
+            ],
+          ),
         ));
   }
 }

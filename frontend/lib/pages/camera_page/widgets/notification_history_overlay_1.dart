@@ -1,6 +1,6 @@
 import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
-import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
+import 'package:dev_comp_gen_ai_frontend/core/repositories/own_notifications_repository.dart';
 import 'package:flutter/material.dart';
 
 class NotificationHistoryOverlay1 extends StatelessWidget {
@@ -12,8 +12,7 @@ class NotificationHistoryOverlay1 extends StatelessWidget {
       BuildContext context, NotificationData notificationData) async {
     // display the details of the notification
     onDetails();
-    GlobalFunctions.launchPopup1(
-        context: context, child: Text(notificationData.text ?? "-"));
+    OwnNotificationsRepository().displayDetails(context, notificationData);
   }
 
   @override

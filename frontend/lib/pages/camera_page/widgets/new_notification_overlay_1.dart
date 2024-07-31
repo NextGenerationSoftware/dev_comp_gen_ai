@@ -1,6 +1,6 @@
 import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
-import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
+import 'package:dev_comp_gen_ai_frontend/core/repositories/own_notifications_repository.dart';
 import 'package:flutter/material.dart';
 
 class NewNotificationOverlay1 extends StatelessWidget {
@@ -9,11 +9,11 @@ class NewNotificationOverlay1 extends StatelessWidget {
   const NewNotificationOverlay1(
       {super.key, required this.notificationData, required this.onDetails});
 
-  Future displayDetails(BuildContext context) async {
+  Future displayDetails(
+      BuildContext context, NotificationData notificationData) async {
     // display the details of the notification
     onDetails();
-    GlobalFunctions.launchPopup1(
-        context: context, child: Text(notificationData.text ?? "-"));
+    OwnNotificationsRepository().displayDetails(context, notificationData);
   }
 
   @override
@@ -32,7 +32,7 @@ class NewNotificationOverlay1 extends StatelessWidget {
             width: GlobalVariables.screenSize.width * 0.4,
             child: GestureDetector(
               onTap: () {
-                displayDetails(context);
+                displayDetails(context, notificationData);
               },
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),

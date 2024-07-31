@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dev_comp_gen_ai_frontend/core/data_models/db_datataken.dart';
+import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/point_stats_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
@@ -94,5 +95,14 @@ class GlobalFunctions {
   static String createUid() {
     // create an uid from timestamp
     return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
+  static addNotificationToHistory(NotificationData notificationData) {
+    // add a notification to the history
+    GlobalVariables.notificationData.add(notificationData);
+    // limit to the 20 latest notifications
+    if (GlobalVariables.notificationData.length > 20) {
+      GlobalVariables.notificationData.removeAt(0);
+    }
   }
 }

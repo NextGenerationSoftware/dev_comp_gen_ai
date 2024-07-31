@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/custom_button_1.dart';
 import 'package:flutter/material.dart';
 
 class VerifyImageLabel1 extends StatefulWidget {
@@ -30,29 +32,51 @@ class _VerifyImageLabel1State extends State<VerifyImageLabel1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          child: Image.file(File(widget.imageFile.path)),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: GlobalVariables.screenSize.height * 0.2),
+            child: Image.file(File(widget.imageFile.path), fit: BoxFit.contain),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
         ),
         TextFormField(
           controller: labelController,
+          minLines: 1,
           maxLines: 3,
           decoration: const InputDecoration(
-            labelText: "Label",
+            labelText: "Verify the label or label in your own words",
           ),
         ),
-        Row(
+        const SizedBox(
+          height: 15,
+        ),
+        Column(
           children: [
-            ElevatedButton(
+            CustomButton1(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: const Text("Cancel"),
+              color: Colors.red,
+              child: const Text(
+                "Proceed without label",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
-            ElevatedButton(
+            CustomButton1(
               onPressed: () {
                 Navigator.of(context).pop(labelController.text);
               },
-              child: const Text("Process"),
+              color: Colors.black,
+              child: const Text(
+                "Proceed",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),

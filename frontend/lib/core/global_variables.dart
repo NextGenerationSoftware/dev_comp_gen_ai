@@ -21,4 +21,7 @@ class GlobalVariables {
   static PointStatsData? pointStatsData; // point statistics
 
   static List<CameraDescription> cameraDescriptions = [];
+
+  static String dateAndTimeFormat = "dd.MM.yyyy HH:mm";
+  static String timeFormat = "HH:mm:ss";
 }

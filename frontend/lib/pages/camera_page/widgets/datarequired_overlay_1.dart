@@ -67,6 +67,7 @@ class _DatarequiredOverlay1State extends State<DatarequiredOverlay1> {
                     context: context,
                     removeTop: true,
                     child: ListView.builder(
+                      reverse: true,
                       shrinkWrap: true,
                       itemCount:
                           GlobalVariables.datarequiredMap.values.first.length,
@@ -114,11 +115,7 @@ class _DatarequiredOverlay1State extends State<DatarequiredOverlay1> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              if (index <
-                                  GlobalVariables
-                                          .datarequiredMap.values.first.length -
-                                      1)
-                                const Divider(),
+                              if (index > 0) const Divider(),
                             ],
                           ),
                         );

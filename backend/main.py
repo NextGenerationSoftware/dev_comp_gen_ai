@@ -4,6 +4,7 @@ from llm.google_gemini import GeminiAPI
 from database.firebase_handler import Database
 from utils import extract_json_from_response
 import json
+import urllib.parse
 
 
 app = FastAPI()
@@ -17,8 +18,8 @@ async def root():
 
 @app.post("/evaluate_picture")
 async def gemini(request: GeminiRequest):
-    
-    res = g.gemini_flash(image_path=request.img_path, prompt=request.prompt)
+    img_decoded =  urllib.parse.unquote(request.img_path)
+    res = g.gemini_flash(image_path=img_decoded, prompt=request.prompt)
     
     # Fetch the necessary data from the database
     data_required = db.get_data_required()
@@ -71,7 +72,8 @@ async def gemini(request: GeminiRequest):
 
 @app.post("/get_label_and_points")
 async def get_label_and_points(request: GeminiRequest):
-    res = g.gemini_flash(image_path=request.img_path, prompt=request.prompt)
+    img_decoded =  urllib.parse.unquote(request.img_path)
+    res = g.gemini_flash(image_path=img_decoded, prompt=request.prompt)
 
     # Fetch the necessary data from the database
     data_required = db.get_data_required()

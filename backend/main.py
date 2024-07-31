@@ -19,7 +19,10 @@ async def root():
 @app.post("/evaluate_picture")
 async def gemini(request: GeminiRequest):
     img_decoded =  urllib.parse.unquote(request.img_path)
-    res = g.gemini_flash(image_path=img_decoded, prompt=request.prompt)
+    img = request.img_path
+    res = g.gemini_flash(image_path=img, prompt=request.prompt)
+
+
     
     # Fetch the necessary data from the database
     data_required = db.get_data_required()
@@ -73,7 +76,8 @@ async def gemini(request: GeminiRequest):
 @app.post("/get_label_and_points")
 async def get_label_and_points(request: GeminiRequest):
     img_decoded =  urllib.parse.unquote(request.img_path)
-    res = g.gemini_flash(image_path=img_decoded, prompt=request.prompt)
+    img = request.img_path
+    res = g.gemini_flash(image_path=img, prompt=request.prompt)
 
     # Fetch the necessary data from the database
     data_required = db.get_data_required()

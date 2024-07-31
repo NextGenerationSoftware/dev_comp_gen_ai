@@ -140,8 +140,8 @@ class _CameraPageState extends State<CameraPage> {
       // upload image to storage and get url
       String newId = GlobalFunctions.createUid();
       String path = "${GlobalVariables.DEVUSERID}/$newId";
-      String? url =
-          await StorageRepository.uploadAndGetUrl(imageByteList, path);
+      String? url = await StorageRepository.uploadAndGetUrl(imageByteList, path,
+          autodelete: true);
       // get AI-Response for this image
       BackendImagePreview? backendImagePreview =
           await BackendRepository().backendImagePreview(url!);

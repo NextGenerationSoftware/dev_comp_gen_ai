@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/db_datataken.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
@@ -16,6 +17,7 @@ import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/image_preview
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/new_notification_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/notification_history_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/verify_image_label_1.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CameraPage extends StatefulWidget {
@@ -183,6 +185,7 @@ class _CameraPageState extends State<CameraPage> {
       // preview image
       String? imageUrl = await GlobalFunctions.launchPopup1(
         context: context,
+        barrierDismissible: false,
         child: ImagePreview1(
           imageFile: imageFile,
           path: dbDatataken.path!,
@@ -194,6 +197,7 @@ class _CameraPageState extends State<CameraPage> {
         BackendImageEvaluation? backendImageEvaluation =
             await GlobalFunctions.launchPopup1(
           context: context,
+          barrierDismissible: false,
           child: ImageEvaluated1(
             imageUrl: dbDatataken.url!,
             imageId: dbDatataken.id!,
@@ -203,6 +207,7 @@ class _CameraPageState extends State<CameraPage> {
           // verify label
           String? verifiedLabel = await GlobalFunctions.launchPopup1(
             context: context,
+            barrierDismissible: false,
             child: VerifyImageLabel1(
               imageFile: imageFile,
               label: backendImageEvaluation.label ?? "",
@@ -211,6 +216,9 @@ class _CameraPageState extends State<CameraPage> {
           // save datataken to database
           dbDatataken.points = backendImageEvaluation.points;
           dbDatataken.pointcat = backendImageEvaluation.pointcategory;
+          dbDatataken.pointcat = backendImageEvaluation.pointcategory;
+          dbDatataken.datarequiredid = backendImageEvaluation.datarequiredid;
+          dbDatataken.timestamp = Timestamp.now().toDate();
           dbDatataken.label = verifiedLabel;
           FirestoreRepository.uploadDatataken(
               dbDatataken:

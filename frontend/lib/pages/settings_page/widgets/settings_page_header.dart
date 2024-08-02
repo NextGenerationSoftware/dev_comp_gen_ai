@@ -8,6 +8,16 @@ class SettingsPageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.black,
+            Colors.black.withOpacity(0.9),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,6 +32,7 @@ class SettingsPageHeader extends StatelessWidget {
                   icon: const Icon(
                     Icons.chevron_left,
                     size: 30,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -29,7 +40,8 @@ class SettingsPageHeader extends StatelessWidget {
           ),
           const Text(
             "Settings",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const Expanded(child: SizedBox()),
         ],

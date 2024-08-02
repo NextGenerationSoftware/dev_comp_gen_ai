@@ -21,8 +21,8 @@ class BackendRepository {
 
       try {
         final ret = json.decode(backendResponse.body) as Map<String, dynamic>;
-        if (ret["text"].containsKey("findings")) {
-          final findings = ret["text"]["findings"] as List<dynamic>;
+        if (ret.containsKey("findings")) {
+          final findings = ret["findings"] as List<dynamic>;
           if (findings.isNotEmpty) {
             final headline = findings.first["finding_headline"] as String;
             final text = findings.first["finding_text"] as String;
@@ -45,7 +45,7 @@ class BackendRepository {
 
   Future<BackendImageEvaluation?> backendImageEvaluation(
       String imageUrl, String imageId) async {
-    // get a text from the AI what is in the image
+    // get the label and points from the AI
     BackendImageEvaluation? response;
 
     try {
@@ -62,11 +62,18 @@ class BackendRepository {
           if (findings.isNotEmpty) {
             final label = findings.first["label"] as String;
             final pointcat = findings.first["points"] as int;
+            String? datarequiredid;
+            try {
+              datarequiredid = findings.first["datarequired_id"] as String;
+            } catch (e) {
+              // no problem, can happen
+            }
             final points = GlobalFunctions.pointcatToPoints(pointcat);
             response = BackendImageEvaluation(
               points: points,
               pointcategory: pointcat,
               label: label,
+              datarequiredid: datarequiredid,
             );
           }
         }
@@ -97,27 +104,18 @@ class BackendImagePreview {
     this.headline,
     this.text,
   });
-
-  BackendImagePreview.fromJson(Map<String, dynamic> json) {
-    headline = json['headline'];
-    text = json['text'];
-  }
 }
 
 class BackendImageEvaluation {
   int? points;
   int? pointcategory;
   String? label;
+  String? datarequiredid;
 
   BackendImageEvaluation({
     this.points,
     this.pointcategory,
     this.label,
+    this.datarequiredid,
   });
-
-  BackendImageEvaluation.fromJson(Map<String, dynamic> json) {
-    points = json['points'];
-    pointcategory = json['pointcategory'];
-    label = json['label'];
-  }
 }

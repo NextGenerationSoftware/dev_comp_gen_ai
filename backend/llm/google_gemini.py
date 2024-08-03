@@ -21,7 +21,7 @@ class GeminiAPI:
         img_data = BytesIO(response.content)
         return PIL.Image.open(img_data)
 
-    def gemini_flash(self, image_path: str, prompt: str = "What is in this photo?") -> str:
+    def gemini_flash(self, image_path: str, prompt: str = "What is in this photo? Only return the keywords of your findings. Don't repeat yourself.") -> str:
         img_bytes = GeminiAPI.load_image_from_url(image_path)
         model = genai.GenerativeModel(model_name="gemini-1.5-flash")
         response = model.generate_content([f"{prompt}", img_bytes])

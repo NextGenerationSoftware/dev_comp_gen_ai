@@ -1,8 +1,10 @@
 
-def extract_json_from_response(response: str) -> str:
-    """
-    Extracts and cleans the JSON string from the response text
-    """
+import re
 
-    json_text = response.strip('```json').strip('```').strip()
-    return json_text
+def extract_json_from_response(response):
+    # Find JSON-like structure in the response
+    match = re.search(r'\{[\s\S]*\}', response)
+    if match:
+        return match.group(0)
+    else:
+        raise ValueError("No JSON-like structure found in the response")

@@ -1,4 +1,5 @@
 import 'package:dev_comp_gen_ai_frontend/core/repositories/backend_repository.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/custom_button_1.dart';
 import 'package:flutter/material.dart';
 
 class ImageEvaluated1 extends StatefulWidget {
@@ -32,16 +33,26 @@ class _ImageEvaluated1State extends State<ImageEvaluated1> {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CircularProgressIndicator(),
-        SizedBox(
+        const CircularProgressIndicator(),
+        const SizedBox(
           height: 15,
         ),
-        Text(
+        const Text(
           "Evaluating Image...",
           style: TextStyle(fontSize: 18),
+        ),
+        CustomButton1(
+          onPressed: () {
+            Navigator.of(context).pop(null);
+          },
+          color: Colors.red,
+          child: const Text(
+            "Cancel",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );

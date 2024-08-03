@@ -11,6 +11,16 @@ class CameraPageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.black,
+            Colors.black.withOpacity(0.9),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -41,11 +51,16 @@ class CameraPageHeader extends StatelessWidget {
                           (GlobalVariables.userData!.pointsspent ?? 0))
                       .toString(),
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  width: 3,
                 ),
                 const Icon(
                   Icons.star,
-                  color: GlobalColors.highlight2,
+                  color: GlobalColors.highlight4,
                   size: 20,
                 )
               ],
@@ -62,6 +77,7 @@ class CameraPageHeader extends StatelessWidget {
                   icon: const Icon(
                     Icons.settings,
                     size: 24,
+                    color: Colors.white,
                   ),
                 ),
               ],

@@ -6,6 +6,8 @@ import 'package:dev_comp_gen_ai_frontend/pages/landing_page/landing_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/settings_page/widgets/settings_page_header.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/widgets/custom_button_1.dart';
+
 class SettingsPage extends StatefulWidget {
   static const route = "/settings";
   const SettingsPage({super.key});
@@ -54,16 +56,20 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   checkForChanges()
-                      ? ElevatedButton(
+                      ? CustomButton1(
+                          width: double.maxFinite,
                           onPressed: () async {
                             GlobalVariables.userData!.name =
                                 nameController.text;
                             await FirestoreRepository.updateUserData();
+                            setState(() {});
                           },
-                          child: const Text("Save changes"),
+                          color: Colors.black,
+                          child: const Text("Save changes",
+                              style: TextStyle(color: Colors.white)),
                         )
                       : const SizedBox(),
                   const SizedBox(

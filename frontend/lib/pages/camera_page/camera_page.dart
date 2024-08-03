@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 
 class CameraPage extends StatefulWidget {
   static const route = "/camera";
+  static bool takingImageLoading = false;
   const CameraPage({super.key});
 
   @override
@@ -31,7 +32,7 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   CameraController? cameraController;
   String? aiInformation;
-  bool takingImageLoading = false;
+
   late OverlayEntry datarequiredOverlayEntry;
   late OverlayEntry notificationhistoryOverlayEntry;
   Timer? previewTimer;
@@ -106,7 +107,7 @@ class _CameraPageState extends State<CameraPage> {
     // display a new notification for some time and remove it afterwards
     try {
       if (mounted &&
-          !takingImageLoading &&
+          !CameraPage.takingImageLoading &&
           GlobalVariables.currentRoute == CameraPage.route) {
         // only process when camera_page is the current route
         late OverlayEntry newNotificationOverlayEntry;
@@ -170,7 +171,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Future takeImage() async {
     setState(() {
-      takingImageLoading = true;
+      CameraPage.takingImageLoading = true;
     });
     // trigger when the user wants to send a picture to the backend
     final imageFile = await cameraController?.takePicture();
@@ -249,7 +250,7 @@ class _CameraPageState extends State<CameraPage> {
           context: context, message: "Image couldn't be taken.");
     }
     setState(() {
-      takingImageLoading = false;
+      CameraPage.takingImageLoading = false;
     });
   }
 
@@ -325,18 +326,25 @@ class _CameraPageState extends State<CameraPage> {
                               ),
                             ),
                             const Expanded(child: SizedBox()),
-                            takingImageLoading
-                                ? const CircularProgressIndicator()
-                                : IconButton(
-                                    onPressed: () {
-                                      takeImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.camera,
-                                      color: Colors.white,
-                                      size: 50,
+                            SizedBox(
+                              width: 70,
+                              height: 70,
+                              child: CameraPage.takingImageLoading
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : IconButton(
+                                      onPressed: () {
+                                        takeImage();
+                                      },
+                                      icon: const Icon(
+                                        Icons.camera,
+                                        color: Colors.white,
+                                        size: 50,
+                                      ),
                                     ),
-                                  ),
+                            ),
                             const Expanded(child: SizedBox()),
                             /*IconButton(
                                 onPressed: () {

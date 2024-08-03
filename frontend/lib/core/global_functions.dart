@@ -13,7 +13,12 @@ class GlobalFunctions {
     // show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.black,
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }

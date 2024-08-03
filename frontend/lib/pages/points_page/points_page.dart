@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dev_comp_gen_ai_frontend/core/global_colors.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/points_page/widgets/points_page_header.dart';
@@ -18,18 +20,7 @@ class PointsPage extends StatelessWidget {
       children: [
         const PointsPageHeader(),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomRight,
-                colors: [
-                  GlobalColors.highlight4.withAlpha(100),
-                  GlobalColors.highlight3.withAlpha(100),
-                  //GlobalColors.highlight2.withAlpha(230),
-                ],
-              ),
-            ),
+          child: PointsPageBackground1(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -54,7 +45,7 @@ class PointsPage extends StatelessWidget {
                             ),
                             const Icon(
                               Icons.star,
-                              color: GlobalColors.highlight2,
+                              color: GlobalColors.highlight4,
                               size: 30,
                             )
                           ],
@@ -117,6 +108,9 @@ class PointsPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   const Divider(
                     color: Colors.black,
                     thickness: 1,
@@ -149,6 +143,55 @@ class PointsPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PointsPageBackground1 extends StatelessWidget {
+  final Widget child;
+  const PointsPageBackground1({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final double size1 = GlobalVariables.screenSize.width * 1.4;
+    return ClipRRect(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: GlobalColors.background1,
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: -size1 / 2,
+              left: -size1 / 2,
+              child: Container(
+                width: size1,
+                height: size1,
+                decoration: BoxDecoration(
+                  color: GlobalColors.highlight3.withAlpha(100),
+                  borderRadius: BorderRadius.circular(999999),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: -size1 / 2,
+              right: -size1 / 2,
+              child: Container(
+                width: size1,
+                height: size1,
+                decoration: BoxDecoration(
+                  color: GlobalColors.highlight4.withAlpha(100),
+                  borderRadius: BorderRadius.circular(999999),
+                ),
+              ),
+            ),
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+              child: child,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

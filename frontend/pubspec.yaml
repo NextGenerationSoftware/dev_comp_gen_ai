@@ -1,8 +1,8 @@
-name: dev_comp_gen_ai_frontend
-description: "A new Flutter project."
+name: "dev_comp_gen_ai_frontend"
+description: "CrowdData"
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2+3
 
 environment:
   sdk: ">=3.4.0 <4.0.0"

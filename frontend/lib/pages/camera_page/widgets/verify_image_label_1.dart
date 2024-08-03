@@ -48,7 +48,7 @@ class _VerifyImageLabel1State extends State<VerifyImageLabel1> {
           minLines: 1,
           maxLines: 3,
           decoration: const InputDecoration(
-            labelText: "Verify the label or label in your own words",
+            labelText: "Label the image in your own words",
           ),
         ),
         const SizedBox(

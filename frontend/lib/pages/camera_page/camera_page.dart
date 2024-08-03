@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/db_datataken.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/notification_data.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
@@ -16,10 +17,12 @@ import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/image_preview
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/new_notification_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/notification_history_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/verify_image_label_1.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CameraPage extends StatefulWidget {
   static const route = "/camera";
+  static bool takingImageLoading = false;
   const CameraPage({super.key});
 
   @override
@@ -29,7 +32,7 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   CameraController? cameraController;
   String? aiInformation;
-  bool takingImageLoading = false;
+
   late OverlayEntry datarequiredOverlayEntry;
   late OverlayEntry notificationhistoryOverlayEntry;
   Timer? previewTimer;
@@ -104,7 +107,7 @@ class _CameraPageState extends State<CameraPage> {
     // display a new notification for some time and remove it afterwards
     try {
       if (mounted &&
-          !takingImageLoading &&
+          !CameraPage.takingImageLoading &&
           GlobalVariables.currentRoute == CameraPage.route) {
         // only process when camera_page is the current route
         late OverlayEntry newNotificationOverlayEntry;
@@ -140,8 +143,8 @@ class _CameraPageState extends State<CameraPage> {
       // upload image to storage and get url
       String newId = GlobalFunctions.createUid();
       String path = "${GlobalVariables.DEVUSERID}/$newId";
-      String? url =
-          await StorageRepository.uploadAndGetUrl(imageByteList, path);
+      String? url = await StorageRepository.uploadAndGetUrl(imageByteList, path,
+          autodelete: true);
       // get AI-Response for this image
       BackendImagePreview? backendImagePreview =
           await BackendRepository().backendImagePreview(url!);
@@ -168,7 +171,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Future takeImage() async {
     setState(() {
-      takingImageLoading = true;
+      CameraPage.takingImageLoading = true;
     });
     // trigger when the user wants to send a picture to the backend
     final imageFile = await cameraController?.takePicture();
@@ -183,6 +186,7 @@ class _CameraPageState extends State<CameraPage> {
       // preview image
       String? imageUrl = await GlobalFunctions.launchPopup1(
         context: context,
+        barrierDismissible: false,
         child: ImagePreview1(
           imageFile: imageFile,
           path: dbDatataken.path!,
@@ -194,6 +198,7 @@ class _CameraPageState extends State<CameraPage> {
         BackendImageEvaluation? backendImageEvaluation =
             await GlobalFunctions.launchPopup1(
           context: context,
+          barrierDismissible: false,
           child: ImageEvaluated1(
             imageUrl: dbDatataken.url!,
             imageId: dbDatataken.id!,
@@ -203,6 +208,7 @@ class _CameraPageState extends State<CameraPage> {
           // verify label
           String? verifiedLabel = await GlobalFunctions.launchPopup1(
             context: context,
+            barrierDismissible: false,
             child: VerifyImageLabel1(
               imageFile: imageFile,
               label: backendImageEvaluation.label ?? "",
@@ -211,6 +217,9 @@ class _CameraPageState extends State<CameraPage> {
           // save datataken to database
           dbDatataken.points = backendImageEvaluation.points;
           dbDatataken.pointcat = backendImageEvaluation.pointcategory;
+          dbDatataken.pointcat = backendImageEvaluation.pointcategory;
+          dbDatataken.datarequiredid = backendImageEvaluation.datarequiredid;
+          dbDatataken.timestamp = Timestamp.now().toDate();
           dbDatataken.label = verifiedLabel;
           FirestoreRepository.uploadDatataken(
               dbDatataken:
@@ -241,7 +250,7 @@ class _CameraPageState extends State<CameraPage> {
           context: context, message: "Image couldn't be taken.");
     }
     setState(() {
-      takingImageLoading = false;
+      CameraPage.takingImageLoading = false;
     });
   }
 
@@ -317,18 +326,25 @@ class _CameraPageState extends State<CameraPage> {
                               ),
                             ),
                             const Expanded(child: SizedBox()),
-                            takingImageLoading
-                                ? const CircularProgressIndicator()
-                                : IconButton(
-                                    onPressed: () {
-                                      takeImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.camera,
-                                      color: Colors.white,
-                                      size: 50,
+                            SizedBox(
+                              width: 70,
+                              height: 70,
+                              child: CameraPage.takingImageLoading
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : IconButton(
+                                      onPressed: () {
+                                        takeImage();
+                                      },
+                                      icon: const Icon(
+                                        Icons.camera,
+                                        color: Colors.white,
+                                        size: 50,
+                                      ),
                                     ),
-                                  ),
+                            ),
                             const Expanded(child: SizedBox()),
                             /*IconButton(
                                 onPressed: () {

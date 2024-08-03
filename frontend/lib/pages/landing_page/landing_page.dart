@@ -25,7 +25,7 @@ class LandingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Name of the App",
+                  "CrowdData",
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -51,7 +51,7 @@ class LandingPage extends StatelessWidget {
                   height: 15,
                 ),
                 const Text(
-                  "Let's go",
+                  "Let's get data",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ],

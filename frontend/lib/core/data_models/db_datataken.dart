@@ -6,6 +6,8 @@ class DBDatataken {
   String? label;
   int? pointcat;
   int? points;
+  String? datarequiredid;
+  DateTime? timestamp;
 
   DBDatataken({
     this.id,
@@ -15,6 +17,8 @@ class DBDatataken {
     this.label,
     this.pointcat,
     this.points,
+    this.datarequiredid,
+    this.timestamp,
   });
 
   DBDatataken.fromJson(Map<String, dynamic> json) {
@@ -25,6 +29,8 @@ class DBDatataken {
     label = json['label'];
     pointcat = json['pointcat'];
     points = json['points'];
+    datarequiredid = json['datarequiredid'];
+    timestamp = json['timestamp']?.toDate();
   }
 
   Map<String, dynamic> toMap() {
@@ -36,6 +42,8 @@ class DBDatataken {
     map["label"] = label;
     map["pointcat"] = pointcat;
     map["points"] = points;
+    map["datarequiredid"] = datarequiredid;
+    map["timestamp"] = timestamp;
     return map;
   }
 }

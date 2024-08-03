@@ -13,7 +13,12 @@ class GlobalFunctions {
     // show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.black,
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
@@ -24,12 +29,14 @@ class GlobalFunctions {
     EdgeInsets? padding,
     EdgeInsets? margin,
     BorderRadius? borderRadius,
-    final Color? backgroundColor,
+    Color? backgroundColor,
+    bool barrierDismissible = true,
   }) async {
     dynamic retVal;
     await showDialog(
         context: context,
         useRootNavigator: false,
+        barrierDismissible: barrierDismissible,
         builder: (context) {
           return PopupFrame1(
             padding: padding,

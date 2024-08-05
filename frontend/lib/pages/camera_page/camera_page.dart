@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -124,22 +123,7 @@ class _CameraPageState extends State<CameraPage> {
             return NewNotificationOverlay1(
               notificationData: notificationData,
               onDetails: () {
-                // close all popups
-                try {
-                  notificationhistoryOverlayEntry.remove();
-                } catch (e) {
-                  // no problem can happen
-                }
-                try {
-                  datarequiredOverlayEntry.remove();
-                } catch (e) {
-                  // no problem can happen
-                }
-                try {
-                  newNotificationOverlayEntry.remove();
-                } catch (e) {
-                  // no problem can happen
-                }
+                closeAllOverlay();
               },
             );
           },
@@ -192,22 +176,7 @@ class _CameraPageState extends State<CameraPage> {
     setState(() {
       CameraPage.takingImageLoading = true;
     });
-    // close all popups
-    try {
-      notificationhistoryOverlayEntry.remove();
-    } catch (e) {
-      // no problem can happen
-    }
-    try {
-      datarequiredOverlayEntry.remove();
-    } catch (e) {
-      // no problem can happen
-    }
-    try {
-      newNotificationOverlayEntry.remove();
-    } catch (e) {
-      // no problem can happen
-    }
+    closeAllOverlay();
     // trigger when the user wants to send a picture to the backend
     XFile? imageFile;
     for (int i = 0; i < 100; i++) {
@@ -300,6 +269,25 @@ class _CameraPageState extends State<CameraPage> {
     });
   }
 
+  closeAllOverlay() {
+    // close all overlays
+    try {
+      notificationhistoryOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+    try {
+      datarequiredOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+    try {
+      newNotificationOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+  }
+
   @override
   void dispose() {
     cameraController?.dispose();
@@ -312,7 +300,11 @@ class _CameraPageState extends State<CameraPage> {
     Size screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
-        const CameraPageHeader(),
+        CameraPageHeader(
+          onClicked: () {
+            closeAllOverlay();
+          },
+        ),
         Expanded(
           child: cameraController?.value.isInitialized == true
               ? Stack(

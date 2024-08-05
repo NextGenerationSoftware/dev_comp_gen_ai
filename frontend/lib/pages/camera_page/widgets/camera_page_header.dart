@@ -5,7 +5,8 @@ import 'package:dev_comp_gen_ai_frontend/pages/settings_page/settings_page.dart'
 import 'package:flutter/material.dart';
 
 class CameraPageHeader extends StatelessWidget {
-  const CameraPageHeader({super.key});
+  final Function() onClicked;
+  const CameraPageHeader({super.key, required this.onClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class CameraPageHeader extends StatelessWidget {
                   SizedBox()),
           GestureDetector(
             onTap: () {
+              onClicked();
               Navigator.of(context).pushNamed(PointsPage.route);
             },
             child: Row(
@@ -72,6 +74,7 @@ class CameraPageHeader extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
+                    onClicked();
                     Navigator.of(context).pushNamed(SettingsPage.route);
                   },
                   icon: const Icon(

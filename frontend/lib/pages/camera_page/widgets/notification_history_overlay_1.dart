@@ -41,43 +41,46 @@ class NotificationHistoryOverlay1 extends StatelessWidget {
                   child: MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
-                    child: ListView.builder(
-                      reverse: true,
-                      shrinkWrap: true,
-                      itemCount: notificationData.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            displayDetails(context, notificationData[index]);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  notificationData[index].headline ?? "-",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  DateFormat(GlobalVariables.timeFormat).format(
-                                      notificationData[index].timestamp ??
-                                          DateTime.now()),
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      color: GlobalColors.darkGrey1),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                if (index > 0) const Divider(),
-                              ],
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        reverse: true,
+                        shrinkWrap: true,
+                        itemCount: notificationData.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              displayDetails(context, notificationData[index]);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    notificationData[index].headline ?? "-",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    DateFormat(GlobalVariables.timeFormat)
+                                        .format(
+                                            notificationData[index].timestamp ??
+                                                DateTime.now()),
+                                    style: const TextStyle(
+                                        fontSize: 10,
+                                        color: GlobalColors.darkGrey1),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  if (index > 0) const Divider(),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

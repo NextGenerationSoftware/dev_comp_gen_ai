@@ -68,6 +68,7 @@ class _ImagePreview1State extends State<ImagePreview1> {
                     onPressed: () {
                       Navigator.of(context).pop(null);
                     },
+                    width: double.maxFinite,
                     color: Colors.red,
                     child: const Text(
                       "Cancel",
@@ -79,6 +80,7 @@ class _ImagePreview1State extends State<ImagePreview1> {
                     onPressed: () {
                       proceedImage();
                     },
+                    width: double.maxFinite,
                     color: Colors.black,
                     child: const Text(
                       "Proceed",

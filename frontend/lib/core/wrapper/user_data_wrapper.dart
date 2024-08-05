@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dev_comp_gen_ai_frontend/core/global_functions.dart';
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';

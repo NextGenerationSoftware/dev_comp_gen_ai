@@ -6,6 +6,7 @@ import 'package:dev_comp_gen_ai_frontend/firebase_options.dart';
 import 'package:dev_comp_gen_ai_frontend/routes/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.blueAccent,
             surface: GlobalColors.background1,
             background: Colors.white,
+          ),
+          textTheme: GoogleFonts.montserratTextTheme(
+            Theme.of(context).textTheme,
           ),
         ),
         initialRoute: "/",

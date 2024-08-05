@@ -58,6 +58,9 @@ class _DatarequiredOverlay1State extends State<DatarequiredOverlay1> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
+        constraints: BoxConstraints(
+          maxHeight: GlobalVariables.screenSize.height * 0.5,
+        ),
         child: loading
             ? const CircularProgressIndicator()
             : Material(
@@ -66,60 +69,62 @@ class _DatarequiredOverlay1State extends State<DatarequiredOverlay1> {
                   child: MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
-                    child: ListView.builder(
-                      reverse: true,
-                      shrinkWrap: true,
-                      itemCount:
-                          GlobalVariables.datarequiredMap.values.first.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                GlobalVariables.datarequiredMap.values
-                                        .first[index].description ??
-                                    "-",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    (GlobalFunctions.pointcatToPoints(
-                                                GlobalVariables
-                                                    .datarequiredMap
-                                                    .values
-                                                    .first[index]
-                                                    .pointcat) ??
-                                            0)
-                                        .toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  const Icon(
-                                    Icons.star,
-                                    color: GlobalColors.highlight2,
-                                    size: 18,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              if (index > 0) const Divider(),
-                            ],
-                          ),
-                        );
-                      },
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        reverse: true,
+                        shrinkWrap: true,
+                        itemCount:
+                            GlobalVariables.datarequiredMap.values.first.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  GlobalVariables.datarequiredMap.values
+                                          .first[index].description ??
+                                      "-",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      (GlobalFunctions.pointcatToPoints(
+                                                  GlobalVariables
+                                                      .datarequiredMap
+                                                      .values
+                                                      .first[index]
+                                                      .pointcat) ??
+                                              0)
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const Icon(
+                                      Icons.star,
+                                      color: GlobalColors.highlight2,
+                                      size: 18,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                if (index > 0) const Divider(),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

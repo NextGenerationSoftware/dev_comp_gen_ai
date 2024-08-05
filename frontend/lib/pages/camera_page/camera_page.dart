@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,7 +18,6 @@ import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/image_preview
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/new_notification_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/notification_history_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/verify_image_label_1.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CameraPage extends StatefulWidget {
@@ -35,6 +35,7 @@ class _CameraPageState extends State<CameraPage> {
 
   late OverlayEntry datarequiredOverlayEntry;
   late OverlayEntry notificationhistoryOverlayEntry;
+  late OverlayEntry newNotificationOverlayEntry;
   Timer? previewTimer;
 
   Future initialize() async {
@@ -81,7 +82,7 @@ class _CameraPageState extends State<CameraPage> {
         );
       },
     );
-    previewTimer = Timer.periodic(const Duration(seconds: 30), (Timer t) {
+    previewTimer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
       previewImage();
     });
     initialize();
@@ -96,6 +97,13 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   displayNotificationHistory() {
+    // close notification
+    try {
+      newNotificationOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+    // display the notification history
     if (notificationhistoryOverlayEntry.mounted) {
       notificationhistoryOverlayEntry.remove();
     } else {
@@ -107,26 +115,37 @@ class _CameraPageState extends State<CameraPage> {
     // display a new notification for some time and remove it afterwards
     try {
       if (mounted &&
+          !notificationhistoryOverlayEntry.mounted &&
           !CameraPage.takingImageLoading &&
           GlobalVariables.currentRoute == CameraPage.route) {
         // only process when camera_page is the current route
-        late OverlayEntry newNotificationOverlayEntry;
         newNotificationOverlayEntry = OverlayEntry(
           builder: (context) {
             return NewNotificationOverlay1(
               notificationData: notificationData,
               onDetails: () {
+                // close all popups
+                try {
+                  notificationhistoryOverlayEntry.remove();
+                } catch (e) {
+                  // no problem can happen
+                }
+                try {
+                  datarequiredOverlayEntry.remove();
+                } catch (e) {
+                  // no problem can happen
+                }
                 try {
                   newNotificationOverlayEntry.remove();
                 } catch (e) {
-                  // no problem, can happen
+                  // no problem can happen
                 }
               },
             );
           },
         );
         Overlay.of(context).insert(newNotificationOverlayEntry);
-        await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 3));
         newNotificationOverlayEntry.remove();
       }
     } catch (e) {
@@ -173,8 +192,35 @@ class _CameraPageState extends State<CameraPage> {
     setState(() {
       CameraPage.takingImageLoading = true;
     });
+    // close all popups
+    try {
+      notificationhistoryOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+    try {
+      datarequiredOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
+    try {
+      newNotificationOverlayEntry.remove();
+    } catch (e) {
+      // no problem can happen
+    }
     // trigger when the user wants to send a picture to the backend
-    final imageFile = await cameraController?.takePicture();
+    XFile? imageFile;
+    for (int i = 0; i < 100; i++) {
+      // try to get a picture for 1 second
+      try {
+        imageFile = await cameraController?.takePicture();
+      } catch (e) {
+        // may interfer with image preview
+        await Future.delayed(const Duration(milliseconds: 10));
+        continue;
+      }
+      break;
+    }
 
     if (imageFile != null) {
       // prepare datataken data

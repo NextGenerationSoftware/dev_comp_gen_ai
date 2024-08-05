@@ -4,6 +4,7 @@ import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/repositories/firestore_repository.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/landing_page/landing_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/settings_page/widgets/settings_page_header.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/tutorial_page/tutorial_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/widgets/custom_button_1.dart';
@@ -46,6 +47,24 @@ class _SettingsPageState extends State<SettingsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  CustomButton1(
+                    height: 35,
+                    width: double.maxFinite,
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(TutorialPage.route);
+                    },
+                    child: const Text(
+                      "Tutorial",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
                   TextFormField(
                     controller: nameController,
                     decoration: const InputDecoration(

@@ -24,29 +24,33 @@ class CustomButton1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: onlyBorder || gradient != null
-          ? const EdgeInsets.fromLTRB(0, 4, 0, 4)
-          : null,
-      height: onlyBorder || gradient != null ? height : null,
-      decoration: BoxDecoration(
-          border: onlyBorder
-              ? Border.all(width: 3, color: color ?? Colors.black)
-              : null,
-          gradient: gradient,
-          borderRadius: BorderRadius.circular(99999)),
-      child: ElevatedButton(
-        style: ButtonStyle(
-            visualDensity: gradient != null ? VisualDensity.compact : null,
-            elevation: elevation ?? const WidgetStatePropertyAll(0),
-            shadowColor: const WidgetStatePropertyAll(GlobalColors.lightGrey1),
-            backgroundColor: WidgetStatePropertyAll(
-                gradient != null || onlyBorder ? Colors.transparent : color),
-            foregroundColor: const WidgetStatePropertyAll(
-                Colors.black), // to make text black by default
-            fixedSize: WidgetStatePropertyAll(Size(width, height))),
-        onPressed: onPressed,
-        child: child,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+      child: Container(
+        /*margin: onlyBorder || gradient != null
+            ? const EdgeInsets.fromLTRB(0, 4, 0, 4)
+            : null,*/
+        height: height, // onlyBorder || gradient != null ? height : null,
+        decoration: BoxDecoration(
+            border: onlyBorder
+                ? Border.all(width: 3, color: color ?? Colors.black)
+                : null,
+            gradient: gradient,
+            borderRadius: BorderRadius.circular(99999)),
+        child: ElevatedButton(
+          style: ButtonStyle(
+              visualDensity: gradient != null ? VisualDensity.compact : null,
+              elevation: elevation ?? const WidgetStatePropertyAll(0),
+              shadowColor:
+                  const WidgetStatePropertyAll(GlobalColors.lightGrey1),
+              backgroundColor: WidgetStatePropertyAll(
+                  gradient != null || onlyBorder ? Colors.transparent : color),
+              foregroundColor: const WidgetStatePropertyAll(
+                  Colors.black), // to make text black by default
+              fixedSize: WidgetStatePropertyAll(Size(width, height))),
+          onPressed: onPressed,
+          child: child,
+        ),
       ),
     );
   }

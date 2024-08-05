@@ -107,8 +107,8 @@ class GlobalFunctions {
   static addNotificationToHistory(NotificationData notificationData) {
     // add a notification to the history
     GlobalVariables.notificationData.add(notificationData);
-    // limit to the 20 latest notifications
-    if (GlobalVariables.notificationData.length > 20) {
+    // limit to the 10 latest notifications
+    if (GlobalVariables.notificationData.length > 10) {
       GlobalVariables.notificationData.removeAt(0);
     }
   }

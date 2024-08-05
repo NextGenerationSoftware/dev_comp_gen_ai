@@ -7,6 +7,7 @@ import 'package:dev_comp_gen_ai_frontend/pages/landing_page/landing_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/points_page/points_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/settings_page/settings_page.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/shop_page/shop_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/tutorial_page/tutorial_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -33,6 +34,11 @@ class AppRouter {
         return CustomPageRoute1(
           safeArea: true,
           child: const PointsPage(),
+        );
+      case TutorialPage.route:
+        return CustomPageRoute1(
+          safeArea: true,
+          child: const TutorialPage(),
         );
       case ShopPage.route:
         return CustomPageRoute1(

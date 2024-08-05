@@ -1,5 +1,7 @@
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
+import 'package:dev_comp_gen_ai_frontend/core/widgets/custom_button_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/camera_page.dart';
+import 'package:dev_comp_gen_ai_frontend/pages/tutorial_page/tutorial_page.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatelessWidget {
@@ -19,7 +21,7 @@ class LandingPage extends StatelessWidget {
         SizedBox(
           width: GlobalVariables.screenSize.width,
           child: Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +29,7 @@ class LandingPage extends StatelessWidget {
                 const Text(
                   "CrowdData",
                   style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 40,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
@@ -35,26 +37,52 @@ class LandingPage extends StatelessWidget {
                   height: 40,
                 ),
                 CircleAvatar(
-                  radius: 40,
+                  radius: 33,
+                  backgroundColor: Colors.white,
                   child: IconButton(
                     iconSize: 50,
                     onPressed: () {
                       Navigator.of(context).pushNamed(CameraPage.route);
                     },
-                    color: Colors.black,
+                    highlightColor: Colors.orangeAccent,
                     icon: const Icon(
                       Icons.play_arrow,
+                      color: Colors.black,
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
                 const Text(
                   "Let's get data",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: CustomButton1(
+              width: 170,
+              height: 30,
+              color: Colors.white.withAlpha(130),
+              onPressed: () {
+                Navigator.of(context).pushNamed(TutorialPage.route);
+              },
+              child: const Text(
+                "Tutorial",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),

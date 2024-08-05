@@ -60,6 +60,7 @@ class _VerifyImageLabel1State extends State<VerifyImageLabel1> {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
+              width: double.maxFinite,
               color: Colors.red,
               child: const Text(
                 "Proceed without label",
@@ -71,6 +72,7 @@ class _VerifyImageLabel1State extends State<VerifyImageLabel1> {
               onPressed: () {
                 Navigator.of(context).pop(labelController.text);
               },
+              width: double.maxFinite,
               color: Colors.black,
               child: const Text(
                 "Proceed",

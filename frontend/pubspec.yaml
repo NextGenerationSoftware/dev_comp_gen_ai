@@ -2,7 +2,7 @@ name: "dev_comp_gen_ai_frontend"
 description: "CrowdData"
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -20,6 +20,7 @@ dependencies:
   confetti: ^0.7.0
   intl: ^0.19.0
   google_fonts: ^6.2.1
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

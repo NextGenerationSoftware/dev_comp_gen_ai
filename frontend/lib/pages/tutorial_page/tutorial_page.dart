@@ -1,6 +1,7 @@
 import 'package:dev_comp_gen_ai_frontend/core/global_variables.dart';
 import 'package:dev_comp_gen_ai_frontend/core/widgets/custom_button_1.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TutorialPage extends StatelessWidget {
   static const route = "/tutorial";
@@ -153,7 +154,9 @@ class TutorialPage extends StatelessWidget {
                   CustomButton1(
                     width: double.maxFinite,
                     color: Colors.black,
-                    onPressed: () {},
+                    onPressed: () async {
+                      await launchUrl(Uri.parse("https://crowddata.tech"));
+                    },
                     child: const Text(
                       "visit crowddata.tech",
                       style: TextStyle(

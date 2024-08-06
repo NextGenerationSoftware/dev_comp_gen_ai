@@ -75,6 +75,13 @@ class BackendRepository {
               label: label,
               datarequiredid: datarequiredid,
             );
+          } else {
+            // fallback response
+            response = BackendImageEvaluation(
+              points: 1,
+              pointcategory: 1,
+              label: "",
+            );
           }
         }
       } catch (e) {

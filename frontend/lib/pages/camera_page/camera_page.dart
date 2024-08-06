@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dev_comp_gen_ai_frontend/core/data_models/db_datataken.dart';
@@ -18,6 +19,7 @@ import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/new_notificat
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/notification_history_overlay_1.dart';
 import 'package:dev_comp_gen_ai_frontend/pages/camera_page/widgets/verify_image_label_1.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class CameraPage extends StatefulWidget {
   static const route = "/camera";
@@ -35,7 +37,8 @@ class _CameraPageState extends State<CameraPage> {
   late OverlayEntry datarequiredOverlayEntry;
   late OverlayEntry notificationhistoryOverlayEntry;
   late OverlayEntry newNotificationOverlayEntry;
-  Timer? previewTimer;
+
+  GlobalKey globalKey = GlobalKey();
 
   Future initialize() async {
     GlobalVariables.cameraDescriptions = await availableCameras();
@@ -77,14 +80,30 @@ class _CameraPageState extends State<CameraPage> {
             } catch (e) {
               // no problem, can happen
             }
+            try {
+              datarequiredOverlayEntry.remove();
+            } catch (e) {
+              // no problem, can happen
+            }
           },
         );
       },
     );
-    previewTimer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
-      previewImage();
-    });
+    runPrevCyclic();
     initialize();
+  }
+
+  runPrevCyclic() async {
+    // runs the previewImage function cyclically
+    int intervalSeconds = 30;
+    await Future.delayed(
+        const Duration(seconds: 1)); // wait a little bit before starting
+    while (mounted) {
+      if (GlobalVariables.currentRoute == CameraPage.route) {
+        previewImage();
+      }
+      await Future.delayed(Duration(seconds: intervalSeconds));
+    }
   }
 
   displayDataRequired() {
@@ -139,36 +158,36 @@ class _CameraPageState extends State<CameraPage> {
 
   Future previewImage() async {
     // trigger in a time interval so the user gets notifications about what can be seen through his camera
-    final imageFile = await cameraController?.takePicture();
-    if (imageFile != null) {
-      // take image
-      Uint8List imageByteList = await imageFile.readAsBytes();
-      // upload image to storage and get url
-      String newId = GlobalFunctions.createUid();
-      String path = "${GlobalVariables.DEVUSERID}/$newId";
-      String? url = await StorageRepository.uploadAndGetUrl(imageByteList, path,
-          autodelete: true);
-      // get AI-Response for this image
-      BackendImagePreview? backendImagePreview =
-          await BackendRepository().backendImagePreview(url!);
-      if (backendImagePreview != null) {
-        // create a notification
-        NotificationData notificationData = NotificationData(
-          headline: backendImagePreview.headline,
-          text: backendImagePreview.text,
-          timestamp: DateTime.now(),
-        );
-        // add a notification to the list
-        GlobalFunctions.addNotificationToHistory(notificationData);
-        // display notifcation
-        displayNewNotification(notificationData);
-      } else {
-        // image couldn't be processed
-        // display no error message
-      }
+
+    // take a screenshot of the current camera preview instead of taking a picter from the camera to avoid the camera sound and issues when taking a picture
+    RenderRepaintBoundary boundary =
+        globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage();
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List imageByteList = byteData!.buffer.asUint8List();
+
+    // upload image to storage and get url
+    String newId = GlobalFunctions.createUid();
+    String path = "${GlobalVariables.DEVUSERID}/$newId";
+    String? url = await StorageRepository.uploadAndGetUrl(imageByteList, path,
+        autodelete: true);
+    // get AI-Response for this image
+    BackendImagePreview? backendImagePreview =
+        await BackendRepository().backendImagePreview(url!);
+    if (backendImagePreview != null) {
+      // create a notification
+      NotificationData notificationData = NotificationData(
+        headline: backendImagePreview.headline,
+        text: backendImagePreview.text,
+        timestamp: DateTime.now(),
+      );
+      // add a notification to the list
+      GlobalFunctions.addNotificationToHistory(notificationData);
+      // display notifcation
+      displayNewNotification(notificationData);
     } else {
-      // image couldn't be taken
-      // display no error message
+      // image couldn't be processed
+      // display no error message becuase this is just a preview
     }
   }
 
@@ -291,7 +310,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void dispose() {
     cameraController?.dispose();
-    previewTimer?.cancel();
     super.dispose();
   }
 
@@ -316,8 +334,11 @@ class _CameraPageState extends State<CameraPage> {
                         fit: BoxFit.cover,
                         child: SizedBox(
                           height: screenSize.height,
-                          child: CameraPreview(
-                            cameraController!,
+                          child: RepaintBoundary(
+                            key: globalKey,
+                            child: CameraPreview(
+                              cameraController!,
+                            ),
                           ),
                         ),
                       ),

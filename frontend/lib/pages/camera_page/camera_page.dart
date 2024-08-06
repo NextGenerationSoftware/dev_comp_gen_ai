@@ -334,10 +334,15 @@ class _CameraPageState extends State<CameraPage> {
                         fit: BoxFit.cover,
                         child: SizedBox(
                           height: screenSize.height,
-                          child: RepaintBoundary(
-                            key: globalKey,
-                            child: CameraPreview(
-                              cameraController!,
+                          child: GestureDetector(
+                            onTap: () {
+                              previewImage();
+                            },
+                            child: RepaintBoundary(
+                              key: globalKey,
+                              child: CameraPreview(
+                                cameraController!,
+                              ),
                             ),
                           ),
                         ),

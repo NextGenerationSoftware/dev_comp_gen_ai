@@ -46,7 +46,20 @@ In addition to contributing to a better future, users of our platform are reward
 
 ## How to Run the Project
 
-*This section will be updated soon with detailed instructions on how to run CrowdData.tech.*
+Clone this repository. It contains the frontend and backend code.
+The code for the website is also included but not relevant to make the app run. Hence we only describe how to make the app work.
+
+  **Backend:**
+  - 
+
+
+  **Frontend (the App):**
+  - Download and install the latest Flutter version
+  - Open the "frontend" folder
+  - Create a .env file with the following content
+          gemini_api_key=API_KEY
+  - Replace API_KEY with your Gemini API Key
+  - run the app with flutter run
 
 ## License
 

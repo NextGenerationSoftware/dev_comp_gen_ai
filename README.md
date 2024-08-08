@@ -50,7 +50,7 @@ Clone this repository. It contains the frontend and backend code.
 The code for the website is also included but not relevant to make the app run. Hence we only describe how to make the app work.
 
   **Backend:**
-  - 
+  - TODO
 
 
   **Frontend (the App):**

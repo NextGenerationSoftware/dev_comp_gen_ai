@@ -76,7 +76,7 @@ class TutorialPage extends StatelessWidget {
                     height: spacing2,
                   ),
                   Text(
-                      "Find out which opjects are important to capture in images with the information button on the right. Or just move your phone around slowly to scan your surroundings and get notifications for objects that are important to capture.",
+                      "Find out which objects are important to capture in images with the information button on the right. Or just move your phone around slowly to scan your surroundings and get notifications for objects that are important to capture.",
                       style: textStyle3),
                   const SizedBox(
                     height: spacing1,

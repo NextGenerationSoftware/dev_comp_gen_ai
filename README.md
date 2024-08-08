@@ -50,7 +50,10 @@ Clone this repository. It contains the frontend and backend code.
 The code for the website is also included but not relevant to make the app run. Hence we only describe how to make the app work.
 
   **Backend:**
-  - TODO
+  - make sure Python is installed (we used Python 3.12.3)
+  - create a `.env` file in the backend directory and add `GOOGLE_GEMINI_API_KEY=<yourapikey>`
+  - install the requirements by doing `pip3 install -r requirements.txt` in the backend directory
+  -  start the server with `python3 -m uvicorn --host 0.0.0.0 --port 8080 main:app`
 
 
   **Frontend (the App):**

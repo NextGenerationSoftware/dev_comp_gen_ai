@@ -58,7 +58,7 @@ The code for the website is also included but not relevant to make the app run. 
 
   **Frontend (the App):**
   - Download and install the latest Flutter version
-  - Open the "frontend" folder
+  - Open the frontend directory
   - Create a .env file with the following content
           gemini_api_key=API_KEY
   - Replace API_KEY with your Gemini API Key
